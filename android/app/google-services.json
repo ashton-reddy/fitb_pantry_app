@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "461837880175",
+    "firebase_url": "https://fitb-food-pantry-default-rtdb.firebaseio.com",
+    "project_id": "fitb-food-pantry",
+    "storage_bucket": "fitb-food-pantry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461837880175:android:568611b22436b5272c369a",
+        "android_client_info": {
+          "package_name": "com.example.fitb_pantry_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461837880175-r10ug7dga74pnnf057hh0rihba8brmhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCjzVmc3xGxpZbecZtsZQq5hqprolxfFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461837880175-r10ug7dga74pnnf057hh0rihba8brmhs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fitbPantryApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
