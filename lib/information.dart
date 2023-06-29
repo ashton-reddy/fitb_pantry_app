@@ -15,50 +15,10 @@ class Information extends StatefulWidget {
   State<Information> createState() => _InformationState();
 }
 
-final CollectionReference informationCollection =
-    FirebaseFirestore.instance.collection('School');
-
-// Checks if Today falls in the order open and close days for the school
-// and the school is active
-Future<bool> isTodayValidOrderDay(String selectedSchool) async {
-  try {
-    // Retrieve the information for the school
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-        .collection('School')
-        .doc(selectedSchool)
-        .get();
-
-    // If the school is not active, return false
-
-    // Check if the day is in the range
-    if (documentSnapshot.exists) {
-      bool isSchoolActive = documentSnapshot['is active'];
-      int weekdayValue = DateTime.now().weekday;
-      int openDate = documentSnapshot['open date'].toInt();
-      int closeDate = documentSnapshot['close date'].toInt();
-      if(isSchoolActive == true) {
-        if (openDate <= closeDate) {
-          return openDate <= weekdayValue && weekdayValue <= closeDate;
-        } else {
-          return weekdayValue >= openDate || weekdayValue <= closeDate;
-        }
-      } else {
-        return false;
-      }
-    }
-
-    return false;
-  } catch (e) {
-    print('Error fetching weekdays from Firestore: $e');
-    return false;
-  }
-}
-
 int weekdaysValue = DateTime.now().weekday;
-CollectionReference collection =
-    FirebaseFirestore.instance.collection('School');
+//CollectionReference collection =
+  //  FirebaseFirestore.instance.collection('School');
 Timestamp timestamp = Timestamp.fromDate(DateTime(weekdaysValue));
-DateTime formClose = DateTime.now();
 final DateTime now = DateTime.now();
 final builder1 = ValidationBuilder().phone();
 DateTime? closeDate;
@@ -67,17 +27,15 @@ final TextInputFormatter digitsOnly =
     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'));
 var _numberForm = GlobalKey<FormState>();
 bool isValidForm = false;
-var selectedCurrency, selectedType;
+var selectedSchool1;
 TextEditingController _controllerPhone = TextEditingController();
 TextEditingController _controllerEmail = TextEditingController();
 TextEditingController _controllerFirst = TextEditingController();
 TextEditingController _controllerLast = TextEditingController();
 TextEditingController _controllerSchool = TextEditingController();
 
-
 class _InformationState extends State<Information> {
   bool isActive = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -180,18 +138,17 @@ class _InformationState extends State<Information> {
                           List<DropdownMenuItem> listOfSchools = [];
                           for (int i = 0; i < snapshot.data.docs.length; i++) {
                             DocumentSnapshot snap = snapshot.data.docs[i];
-                              listOfSchools.add(
-                                DropdownMenuItem(
-                                  child: Text(
-                                    snap.id,
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
+                            listOfSchools.add(
+                              DropdownMenuItem(
+                                child: Text(
+                                  snap.id,
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
                                   ),
-                                  value: snap.id,
                                 ),
-                              );
-
+                                value: snap.id,
+                              ),
+                            );
                           }
                           return Column(
                             children: [
@@ -199,13 +156,13 @@ class _InformationState extends State<Information> {
                                 width: 300,
                                 child: DropdownButtonFormField(
                                   items: listOfSchools,
-                                  onChanged: (currencyValue) {
+                                  onChanged: (schoolValue) {
                                     setState(() {
-                                      selectedCurrency = currencyValue;
-                                      _controllerSchool.text = currencyValue;
+                                      selectedSchool1 = schoolValue;
+                                      _controllerSchool.text = schoolValue;
                                     });
                                   },
-                                  value: selectedCurrency,
+                                  value: selectedSchool1,
                                   isExpanded: false,
                                   hint: Text(
                                     "Select your school",
@@ -223,7 +180,7 @@ class _InformationState extends State<Information> {
                                 onPressed: () async {
                                   bool isFormEnabled =
                                       await isTodayValidOrderDay(
-                                          selectedCurrency);
+                                          selectedSchool1);
 
                                   if (isFormEnabled) {
                                     if (_numberForm.currentState!.validate()) {
@@ -253,7 +210,7 @@ class _InformationState extends State<Information> {
                                     }
                                   } else {
                                     const snackBar = SnackBar(
-                                      content:  Text(
+                                      content: Text(
                                         'Sorry, you cannot order from your school at this time',
                                         style: TextStyle(
                                           color: Colors.white,
@@ -283,12 +240,8 @@ class _InformationState extends State<Information> {
                                   height: 60,
                                   width: 200,
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: closeDate != null &&
-                                            closeDate?.weekday ==
-                                                DateTime.thursday
-                                        ? Colors.grey
-                                        : Colors.purple,
+                                  decoration: BoxDecoration (
+                                    color: Colors.purple,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
@@ -306,5 +259,39 @@ class _InformationState extends State<Information> {
         ]),
       ),
     );
+  }
+
+  Future<bool> isTodayValidOrderDay(String selectedSchool) async {
+    try {
+      // Retrieve the information for the school
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('School')
+          .doc(selectedSchool)
+          .get();
+
+      // If the school is not active, return false
+
+      // Check if the day is in the range
+      if (documentSnapshot.exists) {
+        bool isSchoolActive = documentSnapshot['is active'];
+        int weekdayValue = DateTime.now().weekday;
+        int openDate = documentSnapshot['open date'].toInt();
+        int closeDate = documentSnapshot['close date'].toInt();
+        if (isSchoolActive == true) {
+          if (openDate <= closeDate) {
+            return openDate <= weekdayValue && weekdayValue <= closeDate;
+          } else {
+            return weekdayValue >= openDate || weekdayValue <= closeDate;
+          }
+        } else {
+          return false;
+        }
+      }
+
+      return false;
+    } catch (e) {
+      print('Error fetching weekdays from Firestore: $e');
+      return false;
+    }
   }
 }
