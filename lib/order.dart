@@ -8,6 +8,15 @@ void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: OrderPage()));
 }
 
+class Item {
+  final String id;
+  final String image;
+  final String grouping;
+
+  Item(this.id, this.image, this.grouping);
+}
+
+
 class OrderPage extends StatefulWidget {
   OrderPage({Key? key}) : super(key: key);
 
@@ -18,20 +27,12 @@ class OrderPage extends StatefulWidget {
 
 
 class _OrderPageState extends State<OrderPage> {
-  String _itemNameOrder = '';
-  bool _isPopupOpen = false;
-  List<String> imageUrls = [];
-  List<String> itemIds = [];
-  List<String> imageUrls2 = [];
-  List<String> itemIds2 = [];
-  List<String> imageUrls3 = [];
-  List<String> itemIds3 = [];
-  List<String> imageUrls4 = [];
-  List<String> itemIds4 = [];
+
   List<String> groupNames = [];
   List<int> totalLimits = [];
   List<int> eachLimits = [];
   List<String> groupDirections = [];
+
 
 
   @override
@@ -41,26 +42,13 @@ class _OrderPageState extends State<OrderPage> {
     getDirections();
   }
 
-  void _showPopupDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: PopupContent(itemNameOrder: '',),
-        );
-      },
-    ).then((value) {
-      // Handle any logic after the popup is closed (if needed)
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          // Set mainAxisSize to MainAxisSize.min
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: double.infinity, height: 100),
@@ -68,114 +56,66 @@ class _OrderPageState extends State<OrderPage> {
               image: AssetImage('assets/fitb.png'),
             ),
             SizedBox(height: 50),
-            Text(
-              groupNames.elementAt(3),
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            Text(
-                groupDirections.elementAt(3),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-              ),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: itemIds.length,
-              itemBuilder: (context, index) {
-                return itemCard(index);
+          FutureBuilder<Map<dynamic, List<Item>>>(
+            future: createLists(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasData) {
+                final lists = snapshot.data!;
 
-              },
-            ),
-            Text(
-              groupNames.elementAt(0),
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            Text(
-              groupDirections.elementAt(0),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-              ),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: itemIds2.length,
-              itemBuilder: (context, index) {
-                return itemCard2(index);
+                  return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      childAspectRatio: .75,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                    ),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: lists.length,
+                    itemBuilder: (context, index) {
+                      final groupingName = lists.keys.toList()[index];
+                      final items = lists[groupingName]!;
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Text(
+                                    groupingName,
+                                    style: TextStyle(fontSize: 40,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
 
-              },
-            ),
-            Text(
-              groupNames.elementAt(2),
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            Text(
-              groupDirections.elementAt(2),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-              ),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: itemIds3.length,
-              itemBuilder: (context, index) {
-                return itemCard3(index);
+                                Container(
+                                    child: displayGroups(items)
+                                ),
+                              ],
+                            ),
 
-              },
-            ),
-            Text(
-              groupNames.elementAt(1),
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            Text(
-              groupDirections.elementAt(1),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-              ),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: itemIds4.length,
-              itemBuilder: (context, index) {
-                return itemCard4(index);
-
-              },
-            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                return Center(
+                  child: Text('No data available.'),
+                );
+              }
+            },
+          ),
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {},
@@ -183,7 +123,9 @@ class _OrderPageState extends State<OrderPage> {
                 backgroundColor: Colors.white,
                 shadowColor: Colors.transparent,
                 elevation: 0.0,
-              ).copyWith(elevation: MaterialStateProperty.all<double>(0.0)),
+              ).copyWith(
+                  elevation: MaterialStateProperty.all<double>(
+                      0.0)),
               child: Container(
                 child: const Text(
                   'Order',
@@ -207,9 +149,82 @@ class _OrderPageState extends State<OrderPage> {
       ),
     );
   }
-  Future<Map<dynamic, List<String>>> createLists() async {
+  Widget itemCard(Item item) {
+    return Card(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: GestureDetector(
+        onTap: () {
+          // Handle onTap event
+        },
+        child: Container(
+          height: 200,
+          width: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Stack(
+            children: [
+              Image.network(
+                item.image,
+                alignment: Alignment.bottomCenter,
+                fit: BoxFit.cover, // Adjusts the image to fit within the container
+              ),
+
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  constraints: BoxConstraints.expand(
+                    height: 85,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey[700],
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(10.0),
+                      bottomLeft: Radius.circular(10.0),
+                    ),
+                  ),
+                  padding: EdgeInsets.all(4),
+                  child: Stack(
+                    children: [Text(
+                        item.id,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Widget displayGroups(List<Item> items) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        childAspectRatio: .80,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+      ),
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.all(8),
+          child: itemCard(items[index]),
+        );
+      },
+    );
+  }
+
+  Future<Map<dynamic, List<Item>>> createLists() async {
     final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Items').get();
-    final Map<dynamic, List<String>> lists = {};
+    final Map<dynamic, List<Item>> lists = {};
 
     querySnapshot.docs.forEach((doc) {
       final itemImage = doc['image'];
@@ -220,23 +235,23 @@ class _OrderPageState extends State<OrderPage> {
         if (!lists.containsKey(itemGrouping)) {
           lists[itemGrouping] = [];
         }
-        lists[itemGrouping]?.add(itemImage);
-        lists[itemGrouping]?.add(itemId);
+        lists[itemGrouping]?.add(Item(itemId, itemImage, itemGrouping));
       }
     });
 
     return lists;
   }
+
   Future<void> getDirections() async {
     try {
 
-      CollectionReference innerCollectionRef2 = FirebaseFirestore.instance.collection('Food_Group');
+      CollectionReference innerCollectionRef2 = FirebaseFirestore.instance.collection('Groups');
 
       QuerySnapshot querySnapshot2 = await innerCollectionRef2.get();
 
       if (querySnapshot2.docs.isNotEmpty) {
         for (var document in querySnapshot2.docs) {
-          String directions = document['directions'];
+          String directions = document['instructions'];
           String groupName = document['name'];
           int totalLimit = document['totalLimit'];
           int eachLimit = document['eachLimit'];
@@ -255,385 +270,8 @@ class _OrderPageState extends State<OrderPage> {
       print('Error fetching information from Firestore: $e');
     }
   }
-  /*
- Future<void> loadSnacks() async {
-    try {
-      DocumentReference outerDocumentRef = FirebaseFirestore.instance.collection('Food_Group').doc('snacks');
 
-      // Get the reference to the inner collection within the parent document
-      CollectionReference innerCollectionRef = outerDocumentRef.collection('Items');
 
-      // Fetch all documents within the inner collection
-      QuerySnapshot querySnapshot = await innerCollectionRef.get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        for (var document in querySnapshot.docs) {
-          String itemImage = document['image'];
-          String itemId = document['id'];
-          setState(() {
-            imageUrls.add(itemImage);
-            itemIds.add(itemId);
-          });
-        }
-      } else {
-        print('No documents found in the collection');
-      }
-    } catch (e) {
-      print('Error fetching information from Firestore: $e');
-    }
-  }
-  Future<void> loadBreakfast() async {
-    try {
-      DocumentReference outerDocumentRef = FirebaseFirestore.instance.collection('Food_Group').doc('breakfast');
-
-      // Get the reference to the inner collection within the parent document
-      CollectionReference innerCollectionRef = outerDocumentRef.collection('Items');
-
-      // Fetch all documents within the inner collection
-      QuerySnapshot querySnapshot2 = await innerCollectionRef.get();
-
-      if (querySnapshot2.docs.isNotEmpty) {
-        for (var document2 in querySnapshot2.docs) {
-          String itemImage2 = document2['image'];
-          String itemId2 = document2['id'];
-          setState(() {
-            imageUrls2.add(itemImage2);
-            itemIds2.add(itemId2);
-          });
-        }
-      } else {
-        print('No documents found in the collection');
-      }
-    } catch (e) {
-      print('Error fetching information from Firestore: $e');
-    }
-  }
-  Future<void> loadMeals() async {
-    try {
-      DocumentReference outerDocumentRef = FirebaseFirestore.instance.collection('Food_Group').doc('meals');
-
-      // Get the reference to the inner collection within the parent document
-      CollectionReference innerCollectionRef = outerDocumentRef.collection('Items');
-
-      // Fetch all documents within the inner collection
-      QuerySnapshot querySnapshot3 = await innerCollectionRef.get();
-
-      if (querySnapshot3.docs.isNotEmpty) {
-        for (var document3 in querySnapshot3.docs) {
-          String itemImage3 = document3['image'];
-          String itemId3 = document3['id'];
-          setState(() {
-            imageUrls3.add(itemImage3);
-            itemIds3.add(itemId3);
-          });
-        }
-      } else {
-        print('No documents found in the collection');
-      }
-    } catch (e) {
-      print('Error fetching information from Firestore: $e');
-    }
-  }
-  Future<void> loadDrinks() async {
-    try {
-      DocumentReference outerDocumentRef = FirebaseFirestore.instance.collection('Food_Group').doc('drinks');
-
-      // Get the reference to the inner collection within the parent document
-      CollectionReference innerCollectionRef = outerDocumentRef.collection('Items');
-
-      // Fetch all documents within the inner collection
-      QuerySnapshot querySnapshot4 = await innerCollectionRef.get();
-
-      if (querySnapshot4.docs.isNotEmpty) {
-        for (var document4 in querySnapshot4.docs) {
-          String itemImage4 = document4['image'];
-          String itemId4 = document4['id'];
-          setState(() {
-            imageUrls4.add(itemImage4);
-            itemIds4.add(itemId4);
-          });
-        }
-      } else {
-        print('No documents found in the collection');
-      }
-    } catch (e) {
-      print('Error fetching information from Firestore: $e');
-    }
-  }
-  */
-
-  Widget itemCard(int index) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _isPopupOpen = true;
-            _itemNameOrder = itemIds[index];
-          });
-          _showPopupDialog(context);
-        },
-        child: RepaintBoundary(
-          child: Hero(
-            tag: itemIds[index],
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  Image.network(
-                    imageUrls[index],
-                    alignment: Alignment.bottomCenter,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.add_circle,
-                      size: 60,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      // alignment: Alignment.bottomCenter,
-                      constraints: BoxConstraints.expand(
-                        height: Spacing.matGridUnit(scale: 5),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0),
-                        ),
-                      ),
-                      padding: EdgeInsets.all(
-                        Spacing.matGridUnit(scale: .5),
-                      ),
-                      child: Center(
-                        child: Text(itemIds[index]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  Widget itemCard2(int index2) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _isPopupOpen = true;
-            _itemNameOrder = itemIds2[index2];
-          });
-          _showPopupDialog(context);
-        },
-        child: RepaintBoundary(
-          child: Hero(
-            tag: itemIds2[index2],
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  Image.network(
-                    imageUrls2[index2],
-                    alignment: Alignment.bottomCenter,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.add_circle,
-                      size: 60,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      // alignment: Alignment.bottomCenter,
-                      constraints: BoxConstraints.expand(
-                        height: Spacing.matGridUnit(scale: 5),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0),
-                        ),
-                      ),
-                      padding: EdgeInsets.all(
-                        Spacing.matGridUnit(scale: .5),
-                      ),
-                      child: Center(
-                        child: Text(itemIds2[index2]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  Widget itemCard3(int index3) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _isPopupOpen = true;
-            _itemNameOrder = itemIds3[index3];
-          });
-          _showPopupDialog(context);
-        },
-        child: RepaintBoundary(
-          child: Hero(
-            tag: itemIds3[index3],
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  Image.network(
-                    imageUrls3[index3],
-                    alignment: Alignment.bottomCenter,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.add_circle,
-                      size: 60,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      // alignment: Alignment.bottomCenter,
-                      constraints: BoxConstraints.expand(
-                        height: Spacing.matGridUnit(scale: 5),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0),
-                        ),
-                      ),
-                      padding: EdgeInsets.all(
-                        Spacing.matGridUnit(scale: .5),
-                      ),
-                      child: Center(
-                        child: Text(itemIds3[index3]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  Widget itemCard4(int index4) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _isPopupOpen = true;
-            _itemNameOrder = itemIds4[index4];
-          });
-          _showPopupDialog(context);
-        },
-        child: RepaintBoundary(
-          child: Hero(
-            tag: itemIds4[index4],
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  Image.network(
-                    imageUrls4[index4],
-                    alignment: Alignment.bottomCenter,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.add_circle,
-                      size: 60,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      // alignment: Alignment.bottomCenter,
-                      constraints: BoxConstraints.expand(
-                        height: Spacing.matGridUnit(scale: 5),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0),
-                        ),
-                      ),
-                      padding: EdgeInsets.all(
-                        Spacing.matGridUnit(scale: .5),
-                      ),
-                      child: Center(
-                        child: Text(itemIds4[index4]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class PopupContent extends StatefulWidget {
@@ -802,9 +440,4 @@ class _PopupContentState extends State<PopupContent> {
     );
   }
 }
-
-
-
-
-
 

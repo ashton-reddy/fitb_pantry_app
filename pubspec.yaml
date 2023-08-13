@@ -31,7 +31,7 @@ environment:
 dependencies:
   cloud_firestore: ^4.8.1
   email_validator: '^2.1.16'
-  form_validator: ">=0.1.1 <2.0.0"
+  form_validator: ^2.1.1
   flutter:
     sdk: flutter
 
@@ -39,8 +39,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  intl: ^0.17.0
-  flutter_svg: ^0.22.0
+  intl: ^0.18.1
+  flutter_svg: ^1.1.6
   firebase_core: ^2.4.0
   get: ^4.6.1
   get_storage: ^2.0.3

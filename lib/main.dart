@@ -1,4 +1,4 @@
-import 'package:fitb_pantry_app/order.dart';
+  import 'package:fitb_pantry_app/order.dart';
 import 'package:flutter/material.dart';
 import 'information.dart';
 import 'package:firebase_core/firebase_core.dart';
