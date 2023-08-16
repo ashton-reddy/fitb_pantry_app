@@ -24,12 +24,13 @@ class MyApp extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const SizedBox(width: double.infinity, height: 100),
                  const Image(
                     image: AssetImage('assets/fitb.png'),
                   ),
-                const SizedBox(height: 250),
+                const SizedBox(height: 460),
                    ElevatedButton(
                      onPressed: () {
                        Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage()));
@@ -41,11 +42,11 @@ class MyApp extends StatelessWidget {
                      ).copyWith(elevation:ButtonStyleButton.allOrNull(0.0)),
                      child:Container(
                      height: 80,
-                     width: 220,
+                     width: 400,
                      alignment: Alignment.center,
                      decoration: BoxDecoration(
-                       color: Colors.purple,
-                       borderRadius: BorderRadius.circular(20),
+                       color: Colors.blue,
+                       borderRadius: BorderRadius.circular(8),
                      ),
                      child: const Text(
                        'Get Started',

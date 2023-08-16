@@ -32,7 +32,9 @@ class _OrderPageState extends State<OrderPage> {
   List<int> totalLimits = [];
   List<int> eachLimits = [];
   List<String> groupDirections = [];
+  List<bool> cardIsClickedList = [];
 
+  bool cardIsClicked = false;
 
 
   @override
@@ -67,9 +69,9 @@ class _OrderPageState extends State<OrderPage> {
                 final lists = snapshot.data!;
 
                   return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
-                      childAspectRatio: .75,
+                      childAspectRatio: .66,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
                     ),
@@ -149,19 +151,31 @@ class _OrderPageState extends State<OrderPage> {
       ),
     );
   }
+
   Widget itemCard(Item item) {
+
     return Card(
       elevation: 8.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: GestureDetector(
         onTap: () {
-          // Handle onTap event
+          print("Tapped");
+          setState(() {
+           cardIsClicked = !cardIsClicked;
+           print('tap'); // Toggle the specific card's state
+          });
         },
         child: Container(
           height: 200,
           width: 200,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color:  cardIsClicked
+                  ? Colors.green
+                  : Colors.blueGrey,
+              width: 3,
+            ),
           ),
           child: Stack(
             children: [
@@ -178,20 +192,38 @@ class _OrderPageState extends State<OrderPage> {
                     height: 85,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.blueGrey[700],
+                    color:  cardIsClicked
+                        ? Colors.green
+                        : Colors.blueGrey,
                     borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(10.0),
-                      bottomLeft: Radius.circular(10.0),
+                      bottomRight: Radius.circular(8),
+                      bottomLeft: Radius.circular(8),
                     ),
                   ),
                   padding: EdgeInsets.all(4),
-                  child: Stack(
-                    children: [Text(
-                        item.id,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10,),
+                      Center(
+                        child: Text(
+                          item.id,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
                     ),
+                      ),
+                      SizedBox(height: 6,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_circle,
+                              size: 25.0, // You can adjust the size as needed
+                              color: Colors.white, // You can adjust the color as needed
+                            ),
+                          ],
+                        ),
                   ],
                   ),
                 ),
@@ -202,6 +234,7 @@ class _OrderPageState extends State<OrderPage> {
       ),
     );
   }
+
   Widget displayGroups(List<Item> items) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -234,6 +267,7 @@ class _OrderPageState extends State<OrderPage> {
       if (querySnapshot.docs.isNotEmpty) {
         if (!lists.containsKey(itemGrouping)) {
           lists[itemGrouping] = [];
+            // Initialize with false
         }
         lists[itemGrouping]?.add(Item(itemId, itemImage, itemGrouping));
       }
