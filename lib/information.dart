@@ -167,7 +167,7 @@ class _InformationState extends State<Information> {
                                   hint: Text(
                                     "Select your school",
                                     style: TextStyle(
-                                      color: Colors.grey[600],
+                                       color: Colors.grey[600],
                                       fontSize: 20,
                                     ),
                                   ),

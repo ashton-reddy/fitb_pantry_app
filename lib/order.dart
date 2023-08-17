@@ -33,7 +33,7 @@ class _OrderPageState extends State<OrderPage> {
   List<int> totalLimits = [];
   List<int> eachLimits = [];
   List<String> groupDirections = [];
-
+  int listlength = 0;
 
   @override
   void initState() {
@@ -65,6 +65,8 @@ class _OrderPageState extends State<OrderPage> {
                 );
               } else if (snapshot.hasData) {
                 final lists = snapshot.data!;
+
+
 
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -118,7 +120,13 @@ class _OrderPageState extends State<OrderPage> {
           ),
             SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 shadowColor: Colors.transparent,
@@ -156,12 +164,33 @@ class _OrderPageState extends State<OrderPage> {
       elevation: 8.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           setState(() {
             item.cardIsChecked = 1 - item.cardIsChecked;
             print('Item card checked: ${item.id}, cardIsChecked: ${item.cardIsChecked}');
           });
 
+          // Check if the item is checked
+          if (item.cardIsChecked == 1) {
+            try {
+              // Create a reference to the cart items collection
+              CollectionReference studentOrders =
+              FirebaseFirestore.instance.collection('Orders');
+
+              // Prepare the data to save
+              Map<String, dynamic> dataToSave = {
+                'itemId': item.id,
+                'quantity': 1, // You can adjust this based on your use case
+                'timestamp': FieldValue.serverTimestamp(), // To store the time the item was added
+              };
+
+              // Save the data to the cart items collection
+              await studentOrders.add(dataToSave);
+              print('Item added to cart in Firestore: ${item.id}');
+            } catch (e) {
+              print('Error adding item to cart in Firestore: $e');
+            }
+          }
         },
         child: Container(
           height: 200,
@@ -271,6 +300,7 @@ class _OrderPageState extends State<OrderPage> {
         lists[itemGrouping]?.add(Item(itemId, itemImage, itemGrouping, itemIsClicked));
       }
     });
+
 
     return lists;
   }
