@@ -12,8 +12,9 @@ class Item {
   final String id;
   final String image;
   final String grouping;
+  int cardIsChecked;
 
-  Item(this.id, this.image, this.grouping);
+  Item(this.id, this.image, this.grouping, this.cardIsChecked);
 }
 
 
@@ -32,9 +33,6 @@ class _OrderPageState extends State<OrderPage> {
   List<int> totalLimits = [];
   List<int> eachLimits = [];
   List<String> groupDirections = [];
-  List<bool> cardIsClickedList = [];
-
-  bool cardIsClicked = false;
 
 
   @override
@@ -159,11 +157,11 @@ class _OrderPageState extends State<OrderPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: GestureDetector(
         onTap: () {
-          print("Tapped");
           setState(() {
-           cardIsClicked = !cardIsClicked;
-           print('tap'); // Toggle the specific card's state
+            item.cardIsChecked = 1 - item.cardIsChecked;
+            print('Item card checked: ${item.id}, cardIsChecked: ${item.cardIsChecked}');
           });
+
         },
         child: Container(
           height: 200,
@@ -171,9 +169,9 @@ class _OrderPageState extends State<OrderPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color:  cardIsClicked
-                  ? Colors.green
-                  : Colors.blueGrey,
+              color: (item.cardIsChecked == 0)
+                  ? Colors.blueGrey
+                  : Colors.green,
               width: 3,
             ),
           ),
@@ -192,9 +190,9 @@ class _OrderPageState extends State<OrderPage> {
                     height: 85,
                   ),
                   decoration: BoxDecoration(
-                    color:  cardIsClicked
-                        ? Colors.green
-                        : Colors.blueGrey,
+                    color:  (item.cardIsChecked == 0)
+                        ? Colors.blueGrey
+                        : Colors.green,
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(8),
                       bottomLeft: Radius.circular(8),
@@ -269,7 +267,8 @@ class _OrderPageState extends State<OrderPage> {
           lists[itemGrouping] = [];
             // Initialize with false
         }
-        lists[itemGrouping]?.add(Item(itemId, itemImage, itemGrouping));
+        var itemIsClicked = 0;
+        lists[itemGrouping]?.add(Item(itemId, itemImage, itemGrouping, itemIsClicked));
       }
     });
 
