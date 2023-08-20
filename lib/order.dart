@@ -34,6 +34,10 @@ class _OrderPageState extends State<OrderPage> {
   List<int> eachLimits = [];
   List<String> groupDirections = [];
   int listlength = 0;
+  List<Item> order = [];
+
+
+
 
   @override
   void initState() {
@@ -120,13 +124,50 @@ class _OrderPageState extends State<OrderPage> {
           ),
             SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderPage()),
-                );
+              onPressed: () async {
+                if (order.isNotEmpty) {
+                  try {
+                    // Create a reference to the cart items collection
+                    CollectionReference studentOrders =
+                    FirebaseFirestore.instance.collection('Orders');
+
+                    // Prepare the data to save
+                    Map<String, dynamic> dataToSave = {
+                      'items': order.map((item) => {'itemId': item.id, 'quantity': 1}).toList(),
+                      'timestamp': FieldValue.serverTimestamp(),
+                    };
+
+                    // Save the data to the cart items collection
+                    await studentOrders.add(dataToSave);
+                    print('Items added to cart in Firestore.');
+
+                    // Clear the selectedItems list after saving
+                    order.clear();
+
+                    // Navigate to the OrderPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OrderPage()),
+                    );
+                  } catch (e) {
+                    print('Error adding items to cart in Firestore: $e');
+                  }
+                } else {
+                  // Show a message if no items are selected
+                  const snackBar = SnackBar(
+                    content: Text(
+                      'No items selected',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    backgroundColor: Colors.red,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
               },
+
+
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 shadowColor: Colors.transparent,
@@ -167,31 +208,18 @@ class _OrderPageState extends State<OrderPage> {
         onTap: () async {
           setState(() {
             item.cardIsChecked = 1 - item.cardIsChecked;
+            if (item.cardIsChecked == 1) {
+              order.add(item);
+              print('Item added to order: ${item.id}');
+            } else {
+              order.remove(item);
+              print('Item removed from order: ${item.id}');
+            }
             print('Item card checked: ${item.id}, cardIsChecked: ${item.cardIsChecked}');
           });
 
-          // Check if the item is checked
-          if (item.cardIsChecked == 1) {
-            try {
-              // Create a reference to the cart items collection
-              CollectionReference studentOrders =
-              FirebaseFirestore.instance.collection('Orders');
-
-              // Prepare the data to save
-              Map<String, dynamic> dataToSave = {
-                'itemId': item.id,
-                'quantity': 1, // You can adjust this based on your use case
-                'timestamp': FieldValue.serverTimestamp(), // To store the time the item was added
-              };
-
-              // Save the data to the cart items collection
-              await studentOrders.add(dataToSave);
-              print('Item added to cart in Firestore: ${item.id}');
-            } catch (e) {
-              print('Error adding item to cart in Firestore: $e');
-            }
-          }
         },
+
         child: Container(
           height: 200,
           width: 200,
@@ -267,8 +295,8 @@ class _OrderPageState extends State<OrderPage> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         childAspectRatio: .80,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
       ),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
