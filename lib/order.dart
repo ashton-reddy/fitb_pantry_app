@@ -36,17 +36,12 @@ class _OrderPageState extends State<OrderPage> {
   int listlength = 0;
   List<Item> order = [];
 
-
-
-
   @override
   void initState() {
     super.initState();
     createLists();
     getDirections();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +50,11 @@ class _OrderPageState extends State<OrderPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(width: double.infinity, height: 100),
+            SizedBox(width: double.infinity, height: 50),
             Image(
               image: AssetImage('assets/fitb.png'),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 10),
           FutureBuilder<Map<dynamic, List<Item>>>(
             future: createLists(),
             builder: (context, snapshot) {
@@ -68,16 +63,13 @@ class _OrderPageState extends State<OrderPage> {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasData) {
-                final lists = snapshot.data!;
-
-
-
+                  final lists = snapshot.data!;
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
                       childAspectRatio: .66,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
                     ),
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -89,8 +81,6 @@ class _OrderPageState extends State<OrderPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Column(
-                              children: [
                                 Padding(
                                   padding: EdgeInsets.all(8),
                                   child: Text(
@@ -99,13 +89,9 @@ class _OrderPageState extends State<OrderPage> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-
                                 Container(
                                     child: displayGroups(items)
                                 ),
-                              ],
-                            ),
-
                           ],
                         ),
                       );
@@ -207,17 +193,14 @@ class _OrderPageState extends State<OrderPage> {
       child: GestureDetector(
         onTap: () async {
           setState(() {
-            item.cardIsChecked = 1 - item.cardIsChecked;
-            if (item.cardIsChecked == 1) {
-              order.add(item);
-              print('Item added to order: ${item.id}');
+            if (order.indexWhere((element) => element.id == item.id) >= 0) {
+              // if already in order
+              order.removeWhere((element) => element.id == item.id);
             } else {
-              order.remove(item);
-              print('Item removed from order: ${item.id}');
+              order.add(item);
             }
             print('Item card checked: ${item.id}, cardIsChecked: ${item.cardIsChecked}');
           });
-
         },
 
         child: Container(
@@ -226,9 +209,9 @@ class _OrderPageState extends State<OrderPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: (item.cardIsChecked == 0)
-                  ? Colors.blueGrey
-                  : Colors.green,
+              color: (!order.isEmpty && (order.indexWhere((element) => element.id == item.id) >= 0))
+                  ? Colors.green
+                  : Colors.blueGrey,
               width: 3,
             ),
           ),
@@ -247,9 +230,9 @@ class _OrderPageState extends State<OrderPage> {
                     height: 85,
                   ),
                   decoration: BoxDecoration(
-                    color:  (item.cardIsChecked == 0)
-                        ? Colors.blueGrey
-                        : Colors.green,
+                    color:  (!order.isEmpty && (order.indexWhere((element) => element.id == item.id) >= 0))
+                        ? Colors.green
+                        : Colors.blueGrey,
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(8),
                       bottomLeft: Radius.circular(8),
