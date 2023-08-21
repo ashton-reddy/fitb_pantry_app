@@ -59,37 +59,30 @@ class _OrderPageState extends State<OrderPage> {
                   );
                 } else if (snapshot.hasData) {
                   final lists = snapshot.data!;
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: .66,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                    ),
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: lists.length,
-                    itemBuilder: (context, index) {
-                      final groupingName = lists.keys.toList()[index];
-                      final items = lists[groupingName]!;
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Text(
-                                groupingName,
-                                style: TextStyle(
-                                    fontSize: 40, fontWeight: FontWeight.bold),
+                  return
+                    Container(
+                      child: Column(
+                        children: List.generate(lists.length,(index){
+                          final groupingName = lists.keys.toList()[index];
+                          final items = lists[groupingName]!;
+
+                          return Column(
+                            children: [
+                              SizedBox(width: double.infinity, height: 50),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text(
+                                  groupingName,
+                                  style: TextStyle(
+                                      fontSize: 40, fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ),
-                            Container(child: displayGroups(items)),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                              Container(child: displayGroups(items)),
+                            ],
+                          );
+                        })
+                      ),
+                    );
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Text('Error: ${snapshot.error}'),
