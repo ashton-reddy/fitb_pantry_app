@@ -3,10 +3,9 @@ import 'package:fitb_pantry_app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-
-
 void main() {
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: CompletedOrderPage()));
+  runApp(MaterialApp(
+      debugShowCheckedModeBanner: false, home: CompletedOrderPage()));
 }
 
 class CompletedOrderPage extends StatefulWidget {
@@ -19,8 +18,6 @@ class CompletedOrderPage extends StatefulWidget {
 class _CompletedOrderPageState extends State<CompletedOrderPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-
-    );
+    return const Scaffold();
   }
 }

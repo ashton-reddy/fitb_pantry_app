@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     projectId: 'fitb-food-pantry',
     databaseURL: 'https://fitb-food-pantry-default-rtdb.firebaseio.com',
     storageBucket: 'fitb-food-pantry.appspot.com',
-    iosClientId: '461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com',
+    iosClientId:
+        '461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com',
     iosBundleId: 'com.example.fitbPantryApp',
   );
 
@@ -81,7 +82,8 @@ class DefaultFirebaseOptions {
     projectId: 'fitb-food-pantry',
     databaseURL: 'https://fitb-food-pantry-default-rtdb.firebaseio.com',
     storageBucket: 'fitb-food-pantry.appspot.com',
-    iosClientId: '461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com',
+    iosClientId:
+        '461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com',
     iosBundleId: 'com.example.fitbPantryApp',
   );
 }

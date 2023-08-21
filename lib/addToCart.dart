@@ -39,13 +39,14 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
             child: Text(
               "Add item to Cart",
               style: TextStyle(
-              fontSize: 40,
+                fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
-          ),
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: Spacing.matGridUnit(scale: 3)),
+            padding:
+                EdgeInsets.symmetric(vertical: Spacing.matGridUnit(scale: 3)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -57,12 +58,10 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
                         setState(() => _quantity--);
                       }
                     }),
-                Text(
-                  _quantity.toString(),
-                  style: TextStyle(
-                    fontSize: 18,
-                  )
-                ),
+                Text(_quantity.toString(),
+                    style: TextStyle(
+                      fontSize: 18,
+                    )),
                 IconButton(
                   iconSize: 40.0,
                   icon: Icon(Icons.add),
@@ -81,7 +80,7 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
                 color: Colors.white,
               ),
             ),
-   //         onPressed: () => state.updateCartTotal(_quantity)
+            //         onPressed: () => state.updateCartTotal(_quantity)
             onPressed: () => Navigator.of(context).pop(_quantity),
           )
         ],

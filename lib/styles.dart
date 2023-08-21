@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 class Spacing {
   static const double _matGridUnit = 8.0;
+
   static double matGridUnit({scale = 1}) {
     // Material design grid uses multiples of 8
     // Multiples of 4 are acceptable if needed
