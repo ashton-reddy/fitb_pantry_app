@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitb_pantry_app/models/school_model/school_model.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:injectable/injectable.dart';
@@ -53,11 +52,14 @@ abstract class _LoginPageStore with Store {
       int closeDate = doc['close date'].toInt();
       if (isSchoolActive == true) {
         if (openDate <= closeDate) {
+          isLoading = false;
           return openDate <= weekdayValue && weekdayValue <= closeDate;
         } else {
+          isLoading = false;
           return weekdayValue >= openDate || weekdayValue <= closeDate;
         }
       } else {
+        isLoading = false;
         return false;
       }
     }

@@ -45,17 +45,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Observer(
-        builder: (context) {
-          if(pageStore.isLoading){
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-              ),
-            );
-          }
-          return SingleChildScrollView(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      body: Observer(builder: (context) {
+        if (pageStore.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
               const SizedBox(width: double.infinity, height: 100),
               const Image(
                 image: AssetImage('assets/fitb.png'),
@@ -75,8 +76,10 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 20,
                             ),
                             hintText: 'Phone Number',
-                            constraints:
-                                const BoxConstraints(maxWidth: 300, minWidth: 300),
+                            constraints: const BoxConstraints(
+                              maxWidth: 300,
+                              minWidth: 300,
+                            ),
                           ),
                           validator: builder1.maxLength(15).build(),
                         ),
@@ -89,8 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 20,
                             ),
                             hintText: "Email",
-                            constraints:
-                                const BoxConstraints(maxWidth: 300, minWidth: 300),
+                            constraints: const BoxConstraints(
+                              maxWidth: 300,
+                              minWidth: 300,
+                            ),
                           ),
                           validator: builder2.maxLength(50).build(),
                         ),
@@ -103,8 +108,8 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 20,
                             ),
                             hintText: "First Name",
-                            constraints:
-                                const BoxConstraints(maxWidth: 300, minWidth: 300),
+                            constraints: const BoxConstraints(
+                                maxWidth: 300, minWidth: 300),
                           ),
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'))
@@ -113,7 +118,6 @@ class _LoginPageState extends State<LoginPage> {
                             if (value != null && value.isEmpty) {
                               return "Field can't be empty";
                             }
-
                             return null;
                           },
                         ),
@@ -126,8 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 20,
                             ),
                             hintText: "Last Name",
-                            constraints:
-                                const BoxConstraints(maxWidth: 300, minWidth: 300),
+                            constraints: const BoxConstraints(
+                                maxWidth: 300, minWidth: 300),
                           ),
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'))
@@ -136,7 +140,6 @@ class _LoginPageState extends State<LoginPage> {
                             if (value != null && value.isEmpty) {
                               return "Field can't be empty";
                             }
-
                             return null;
                           },
                         ),
@@ -169,65 +172,17 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 75),
                             ElevatedButton(
                               onPressed: () async {
-                                bool isFormEnabled =
-                                await pageStore.isTodayValidOrderDay(selectedSchool1);
-
-                                if (isFormEnabled) {
-                                  if (_numberForm.currentState!.validate()) {
-                                    setState(() {
-                                      isValidForm = true;
-                                    });
-                                    Map<String, dynamic> dataToSave = {
-                                      'phone number': _controllerPhone.text,
-                                      'email': _controllerEmail.text,
-                                      'first name': _controllerFirst.text,
-                                      'last name': _controllerLast.text,
-                                      'school': _controllerSchool.text,
-                                      'isValidStudent': 0,
-                                    };
-                                    CollectionReference collectionRef =
-                                    FirebaseFirestore.instance
-                                        .collection('Student');
-
-                                    // Add the data and get the DocumentReference
-                                    DocumentReference docRef =
-                                    await collectionRef.add(dataToSave);
-
-                                    setState(() {
-                                      globalDocumentId = docRef.id;
-                                    });
-                                    // Get the ID of the newly added document
-                                    if(context.mounted) {
-                                      /// push to a new screen
-                                    }
-                                  } else {
-                                    setState(() {
-                                      isValidForm = false;
-                                    });
-                                  }
-                                } else {
-                                  const snackBar = SnackBar(
-                                    content: Text(
-                                      'Sorry, you cannot order from your school at this time',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    backgroundColor: Colors.red,
-                                  );
-                                  if(context.mounted) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
-                                }
+                                bool isFormEnabled = await pageStore
+                                    .isTodayValidOrderDay(selectedSchool1);
+                                print('isFormEnabled: $isFormEnabled');
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 shadowColor: Colors.transparent,
                                 elevation: 0.0,
                               ).copyWith(
-                                  elevation:
-                                  ButtonStyleButton.allOrNull(0.0)),
+                                elevation: ButtonStyleButton.allOrNull(0.0),
+                              ),
                               child: Container(
                                 height: 80,
                                 width: 300,
@@ -252,10 +207,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-            ]),
-          );
-        }
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
