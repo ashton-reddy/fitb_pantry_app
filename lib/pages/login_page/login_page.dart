@@ -1,10 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitb_pantry_app/pages/login_page/login_page_store.dart';
 import 'package:fitb_pantry_app/pages/login_page/widgets/logo_header_widget.dart';
-import 'package:fitb_pantry_app/resources/images.dart';
 import 'package:fitb_pantry_app/routing/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -160,9 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (isValidOrderDay) {
                             if (context.mounted) {
                               context.router.push(
-                                OrderRoute(
-                                  studentId: pageStore.docId,
-                                ),
+                                OrderRoute(),
                               );
                             }
                           } else {

@@ -29,18 +29,22 @@ class StartupPage extends StatelessWidget {
                 elevation: 0.0,
               ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
               child: Container(
-                height: 80.h,
-                width: 400.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(8),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 18.w,
+                  vertical: 20.h,
                 ),
-                child: Text(
-                  'Get Started',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.sp,
+                decoration: BoxDecoration(
+                  color: const Color(0xff2F4DED),
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                child: Center(
+                  child: Text(
+                    'Get Started',
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

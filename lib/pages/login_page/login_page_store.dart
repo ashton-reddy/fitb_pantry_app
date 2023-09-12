@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitb_pantry_app/services/account_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:injectable/injectable.dart';
@@ -12,8 +13,6 @@ abstract class _LoginPageStore with Store {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   _LoginPageStore();
-
-  String docId = '';
 
   @observable
   bool isLoading = false;
@@ -85,7 +84,7 @@ abstract class _LoginPageStore with Store {
           FirebaseFirestore.instance.collection('Student');
 
       DocumentReference docRef = await collectionRef.add(dataToSave);
-      docId = docRef.id;
+      AccountService.id = docRef.id;
     }
     isLoading = false;
 

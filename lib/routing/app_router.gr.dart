@@ -16,13 +16,9 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     OrderRoute.name: (routeData) {
-      final args = routeData.argsAs<OrderRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: OrderPage(
-          key: args.key,
-          studentId: args.studentId,
-        ),
+        child: const OrderPage(),
       );
     },
     LoginRoute.name: (routeData) {
@@ -37,44 +33,31 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const StartupPage(),
       );
     },
+    OrderSummaryRoute.name: (routeData) {
+      final args = routeData.argsAs<OrderSummaryRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: OrderSummaryPage(
+          key: args.key,
+          orderList: args.orderList,
+        ),
+      );
+    },
   };
 }
 
 /// generated route for
 /// [OrderPage]
-class OrderRoute extends PageRouteInfo<OrderRouteArgs> {
-  OrderRoute({
-    Key? key,
-    required String studentId,
-    List<PageRouteInfo>? children,
-  }) : super(
+class OrderRoute extends PageRouteInfo<void> {
+  const OrderRoute({List<PageRouteInfo>? children})
+      : super(
           OrderRoute.name,
-          args: OrderRouteArgs(
-            key: key,
-            studentId: studentId,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'OrderRoute';
 
-  static const PageInfo<OrderRouteArgs> page = PageInfo<OrderRouteArgs>(name);
-}
-
-class OrderRouteArgs {
-  const OrderRouteArgs({
-    this.key,
-    required this.studentId,
-  });
-
-  final Key? key;
-
-  final String studentId;
-
-  @override
-  String toString() {
-    return 'OrderRouteArgs{key: $key, studentId: $studentId}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -103,4 +86,42 @@ class StartupRoute extends PageRouteInfo<void> {
   static const String name = 'StartupRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [OrderSummaryPage]
+class OrderSummaryRoute extends PageRouteInfo<OrderSummaryRouteArgs> {
+  OrderSummaryRoute({
+    Key? key,
+    required List<GroupModel> orderList,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OrderSummaryRoute.name,
+          args: OrderSummaryRouteArgs(
+            key: key,
+            orderList: orderList,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderSummaryRoute';
+
+  static const PageInfo<OrderSummaryRouteArgs> page =
+      PageInfo<OrderSummaryRouteArgs>(name);
+}
+
+class OrderSummaryRouteArgs {
+  const OrderSummaryRouteArgs({
+    this.key,
+    required this.orderList,
+  });
+
+  final Key? key;
+
+  final List<GroupModel> orderList;
+
+  @override
+  String toString() {
+    return 'OrderSummaryRouteArgs{key: $key, orderList: $orderList}';
+  }
 }

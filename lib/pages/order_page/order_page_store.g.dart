@@ -41,6 +41,22 @@ mixin _$OrderPageStore on _OrderPageStore, Store {
     });
   }
 
+  late final _$groupListAtom =
+      Atom(name: '_OrderPageStore.groupList', context: context);
+
+  @override
+  List<GroupModel> get groupList {
+    _$groupListAtom.reportRead();
+    return super.groupList;
+  }
+
+  @override
+  set groupList(List<GroupModel> value) {
+    _$groupListAtom.reportWrite(value, super.groupList, () {
+      super.groupList = value;
+    });
+  }
+
   late final _$loadPageAsyncAction =
       AsyncAction('_OrderPageStore.loadPage', context: context);
 
@@ -53,7 +69,8 @@ mixin _$OrderPageStore on _OrderPageStore, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
-itemList: ${itemList}
+itemList: ${itemList},
+groupList: ${groupList}
     ''';
   }
 }

@@ -4,6 +4,7 @@ class ItemModel {
   final String id;
   final String image;
   final String label;
+  bool ordered = false;
 
   ItemModel({
     required this.group,
