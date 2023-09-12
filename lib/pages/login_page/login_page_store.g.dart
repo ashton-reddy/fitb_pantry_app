@@ -49,6 +49,17 @@ mixin _$LoginPageStore on _LoginPageStore, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
+  late final _$isTodayValidOrderDayAsyncAction =
+      AsyncAction('_LoginPageStore.isTodayValidOrderDay', context: context);
+
+  @override
+  Future<bool> isTodayValidOrderDay(String selectedSchool, String phoneNumber,
+      String email, String firstName, String lastName, String school) {
+    return _$isTodayValidOrderDayAsyncAction.run(() => super
+        .isTodayValidOrderDay(
+            selectedSchool, phoneNumber, email, firstName, lastName, school));
+  }
+
   @override
   String toString() {
     return '''

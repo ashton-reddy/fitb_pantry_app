@@ -13,6 +13,8 @@ abstract class _LoginPageStore with Store {
 
   _LoginPageStore();
 
+  String docId = '';
+
   @observable
   bool isLoading = false;
 
@@ -42,8 +44,16 @@ abstract class _LoginPageStore with Store {
   }
 
   @action
-  Future<bool> isTodayValidOrderDay(String selectedSchool) async {
+  Future<bool> isTodayValidOrderDay(
+    String selectedSchool,
+    String phoneNumber,
+    String email,
+    String firstName,
+    String lastName,
+    String school,
+  ) async {
     isLoading = true;
+    bool isValidOrderDay = false;
     final doc = await firestore.collection("School").doc(selectedSchool).get();
     if (doc.exists) {
       bool isSchoolActive = doc['is active'];
@@ -52,18 +62,33 @@ abstract class _LoginPageStore with Store {
       int closeDate = doc['close date'].toInt();
       if (isSchoolActive == true) {
         if (openDate <= closeDate) {
-          isLoading = false;
-          return openDate <= weekdayValue && weekdayValue <= closeDate;
+          isValidOrderDay =
+              openDate <= weekdayValue && weekdayValue <= closeDate;
         } else {
-          isLoading = false;
-          return weekdayValue >= openDate || weekdayValue <= closeDate;
+          isValidOrderDay =
+              weekdayValue >= openDate || weekdayValue <= closeDate;
         }
       } else {
-        isLoading = false;
-        return false;
+        isValidOrderDay = false;
       }
     }
+
+    if (isValidOrderDay) {
+      Map<String, dynamic> dataToSave = {
+        'phoneNumber': phoneNumber,
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'school': school,
+      };
+      CollectionReference collectionRef =
+          FirebaseFirestore.instance.collection('Student');
+
+      DocumentReference docRef = await collectionRef.add(dataToSave);
+      docId = docRef.id;
+    }
     isLoading = false;
-    return false;
+
+    return isValidOrderDay;
   }
 }

@@ -15,10 +15,14 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    StartupRoute.name: (routeData) {
+    OrderRoute.name: (routeData) {
+      final args = routeData.argsAs<OrderRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const StartupPage(),
+        child: OrderPage(
+          key: args.key,
+          studentId: args.studentId,
+        ),
       );
     },
     LoginRoute.name: (routeData) {
@@ -27,21 +31,50 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginPage(),
       );
     },
+    StartupRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StartupPage(),
+      );
+    },
   };
 }
 
 /// generated route for
-/// [StartupPage]
-class StartupRoute extends PageRouteInfo<void> {
-  const StartupRoute({List<PageRouteInfo>? children})
-      : super(
-          StartupRoute.name,
+/// [OrderPage]
+class OrderRoute extends PageRouteInfo<OrderRouteArgs> {
+  OrderRoute({
+    Key? key,
+    required String studentId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OrderRoute.name,
+          args: OrderRouteArgs(
+            key: key,
+            studentId: studentId,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'StartupRoute';
+  static const String name = 'OrderRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<OrderRouteArgs> page = PageInfo<OrderRouteArgs>(name);
+}
+
+class OrderRouteArgs {
+  const OrderRouteArgs({
+    this.key,
+    required this.studentId,
+  });
+
+  final Key? key;
+
+  final String studentId;
+
+  @override
+  String toString() {
+    return 'OrderRouteArgs{key: $key, studentId: $studentId}';
+  }
 }
 
 /// generated route for
@@ -54,6 +87,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StartupPage]
+class StartupRoute extends PageRouteInfo<void> {
+  const StartupRoute({List<PageRouteInfo>? children})
+      : super(
+          StartupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StartupRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
