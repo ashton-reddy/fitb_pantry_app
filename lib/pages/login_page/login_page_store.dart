@@ -43,6 +43,21 @@ abstract class _LoginPageStore with Store {
   }
 
   @action
+  Future<bool> canStudentOrder(String docId) async {
+    isLoading = true;
+    QuerySnapshot snap  =
+    await FirebaseFirestore.instance.collection('Orders').get();
+    for (var document in snap.docs) {
+      if(document.id == docId) {
+        isLoading = false;
+        return false;
+      }
+    }
+    isLoading = false;
+    return true;
+  }
+
+  @action
   Future<bool> isTodayValidOrderDay(
     String selectedSchool,
     String phoneNumber,
@@ -85,6 +100,7 @@ abstract class _LoginPageStore with Store {
 
       DocumentReference docRef = await collectionRef.add(dataToSave);
       AccountService.id = docRef.id;
+      AccountService.email = email;
     }
     isLoading = false;
 

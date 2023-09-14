@@ -30,7 +30,6 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^4.8.1
-  email_validator: '^2.1.16'
   form_validator: ^2.1.1
   flutter:
     sdk: flutter
@@ -75,6 +74,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   json_serializable: ^6.5.4
   json_annotation: ^4.4.0
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_test:

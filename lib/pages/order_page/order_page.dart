@@ -52,7 +52,7 @@ class _OrderPageState extends State<OrderPage> {
                 if (index - 1 == pageStore.groupList.length) {
                   return GestureDetector(
                     onTap: () {
-                      context.router.push(
+                      context.router.replace(
                         OrderSummaryRoute(
                           orderList: pageStore.groupList,
                         ),

@@ -49,11 +49,9 @@ abstract class _OrderSummaryPageStore with Store {
       };
 
       // Save the data to the cart items collection
-      await studentOrders.add(dataToSave);
-      print('Items added to cart in Firestore.');
+      await studentOrders.doc(AccountService.id).set(dataToSave);
 
     } catch (e) {
-      print('Error adding items to cart in Firestore: $e');
     }
 
     isLoading = false;
