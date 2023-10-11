@@ -98,8 +98,8 @@ abstract class _LoginPageStore with Store {
       CollectionReference collectionRef =
           FirebaseFirestore.instance.collection('Student');
 
-      DocumentReference docRef = await collectionRef.add(dataToSave);
-      AccountService.id = docRef.id;
+      await collectionRef.doc(email).set(dataToSave);
+      AccountService.id = email;
       AccountService.email = email;
     }
     isLoading = false;

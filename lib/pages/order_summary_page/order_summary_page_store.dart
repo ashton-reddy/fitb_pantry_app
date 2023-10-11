@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitb_pantry_app/models/group_model/group_model.dart';
 import 'package:fitb_pantry_app/models/item_model/item_model.dart';
 import 'package:fitb_pantry_app/services/account_service.dart';
+import 'package:get/get.dart';
 import 'package:mobx/mobx.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,7 +19,7 @@ abstract class _OrderSummaryPageStore with Store {
 
   List<GroupModel> orderSummaryList = [];
   List<ItemModel> orderedItems = [];
-
+  
   @observable
   bool isLoading = false;
 
@@ -31,6 +32,7 @@ abstract class _OrderSummaryPageStore with Store {
       for (int j = 0; j < orderList[i].items.length; j++) {
         if (!orderList[i].items[j].ordered) {
           orderSummaryList[i].items.removeAt(j);
+          j--;
         } else {
           orderedItems.add(orderList[i].items[j]);
         }

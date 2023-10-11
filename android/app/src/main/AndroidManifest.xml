@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fitb_pantry_app">
+    package="com.fitbpantry.fitb_pantry_app">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="fitb_pantry_app"
+        android:label="FITB Food Pantry"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
