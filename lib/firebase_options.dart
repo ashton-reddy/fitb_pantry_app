@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,38 +52,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBl-FKEy_a9ogu5SRmte2zq073fdXJsJ0E',
-    appId: '1:461837880175:web:18fbeb7c4b31a1f52c369a',
-    messagingSenderId: '461837880175',
-    projectId: 'fitb-food-pantry',
-    authDomain: 'fitb-food-pantry.firebaseapp.com',
-    databaseURL: 'https://fitb-food-pantry-default-rtdb.firebaseio.com',
-    storageBucket: 'fitb-food-pantry.appspot.com',
-    measurementId: 'G-CXY1TY5H17',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBCjzVmc3xGxpZbecZtsZQq5hqprolxfFU',
-    appId: '1:461837880175:android:568611b22436b5272c369a',
-    messagingSenderId: '461837880175',
-    projectId: 'fitb-food-pantry',
-    databaseURL: 'https://fitb-food-pantry-default-rtdb.firebaseio.com',
-    storageBucket: 'fitb-food-pantry.appspot.com',
-  );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCIB-7BISCQ9-cJKJ9BaXkcR-G2fNoaIrU',
-    appId: '1:461837880175:ios:d8f10d06a8aab2282c369a',
-    messagingSenderId: '461837880175',
-    projectId: 'fitb-food-pantry',
-    databaseURL: 'https://fitb-food-pantry-default-rtdb.firebaseio.com',
-    storageBucket: 'fitb-food-pantry.appspot.com',
-    iosClientId: '461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com',
-    iosBundleId: 'com.example.fitbPantryApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCIB-7BISCQ9-cJKJ9BaXkcR-G2fNoaIrU',
     appId: '1:461837880175:ios:d8f10d06a8aab2282c369a',
     messagingSenderId: '461837880175',
