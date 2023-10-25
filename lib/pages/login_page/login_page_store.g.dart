@@ -49,6 +49,14 @@ mixin _$LoginPageStore on _LoginPageStore, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
+  late final _$canStudentOrderAsyncAction =
+      AsyncAction('_LoginPageStore.canStudentOrder', context: context);
+
+  @override
+  Future<bool> canStudentOrder(String docId) {
+    return _$canStudentOrderAsyncAction.run(() => super.canStudentOrder(docId));
+  }
+
   late final _$isTodayValidOrderDayAsyncAction =
       AsyncAction('_LoginPageStore.isTodayValidOrderDay', context: context);
 

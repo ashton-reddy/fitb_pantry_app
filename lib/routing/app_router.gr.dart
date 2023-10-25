@@ -15,16 +15,22 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    OrderRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OrderPage(),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginPage(),
       );
     },
-    OrderRoute.name: (routeData) {
+    StartupRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const OrderPage(),
+        child: const StartupPage(),
       );
     },
     OrderSummaryRoute.name: (routeData) {
@@ -37,13 +43,27 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    StartupRoute.name: (routeData) {
+    CompletedRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const StartupPage(),
+        child: const CompletedPage(),
       );
     },
   };
+}
+
+/// generated route for
+/// [OrderPage]
+class OrderRoute extends PageRouteInfo<void> {
+  const OrderRoute({List<PageRouteInfo>? children})
+      : super(
+          OrderRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -61,15 +81,15 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [OrderPage]
-class OrderRoute extends PageRouteInfo<void> {
-  const OrderRoute({List<PageRouteInfo>? children})
+/// [StartupPage]
+class StartupRoute extends PageRouteInfo<void> {
+  const StartupRoute({List<PageRouteInfo>? children})
       : super(
-          OrderRoute.name,
+          StartupRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'OrderRoute';
+  static const String name = 'StartupRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -113,15 +133,15 @@ class OrderSummaryRouteArgs {
 }
 
 /// generated route for
-/// [StartupPage]
-class StartupRoute extends PageRouteInfo<void> {
-  const StartupRoute({List<PageRouteInfo>? children})
+/// [CompletedPage]
+class CompletedRoute extends PageRouteInfo<void> {
+  const CompletedRoute({List<PageRouteInfo>? children})
       : super(
-          StartupRoute.name,
+          CompletedRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'StartupRoute';
+  static const String name = 'CompletedRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
