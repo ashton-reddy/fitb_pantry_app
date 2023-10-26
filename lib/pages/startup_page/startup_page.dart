@@ -34,7 +34,7 @@ class StartupPage extends StatelessWidget {
                   vertical: 20.h,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xff2F4DED),
+                  color: const Color(0xAD0075),
                   borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Center(

@@ -66,7 +66,7 @@ class CompletedPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'Get back',
+                      'Home',
                       style: TextStyle(
                         fontSize: 32.sp,
                         fontWeight: FontWeight.w700,

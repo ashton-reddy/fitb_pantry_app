@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         Text(
-                          'Personal Info',
+                          '',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -238,12 +238,12 @@ class _LoginPageState extends State<LoginPage> {
                               vertical: 20.h,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xff2F4DED),
+                              color: const Color(0xAD0075),
                               borderRadius: BorderRadius.circular(16.r),
                             ),
                             child: Center(
                               child: Text(
-                                'Get Started',
+                                'Start Order',
                                 style: TextStyle(
                                   fontSize: 32.sp,
                                   fontWeight: FontWeight.w700,
