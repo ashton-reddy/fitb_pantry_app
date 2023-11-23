@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             child: SizedBox(
               height: ScreenUtil.defaultSize.height,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const LogoHeaderWidget(),
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         Text(
-                          '',
+                          'Personal Info',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -238,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
                               vertical: 20.h,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xAD0075),
+                              color: const Color(0xffFF6600),
                               borderRadius: BorderRadius.circular(16.r),
                             ),
                             child: Center(

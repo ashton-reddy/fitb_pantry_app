@@ -143,23 +143,18 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 32),
-                child: ElevatedButton(
-                  onPressed: () {
+                padding: const EdgeInsets.only(bottom: 16),
+                child: GestureDetector(
+                  onTap: () {
                     context.router.replace(const CompletedRoute());
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shadowColor: Colors.transparent,
-                    elevation: 0.0,
-                  ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 18.w,
                       vertical: 20.h,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xAD0075),
+                      color: const Color(0xffFF6600),
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                     child: Center(

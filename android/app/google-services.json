@@ -44,6 +44,42 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:461837880175:android:39a12a10efa0ee732c369a",
+        "android_client_info": {
+          "package_name": "com.example.fitbadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461837880175-r10ug7dga74pnnf057hh0rihba8brmhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCjzVmc3xGxpZbecZtsZQq5hqprolxfFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461837880175-r10ug7dga74pnnf057hh0rihba8brmhs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "461837880175-5jb8tvmuh754onp0l3diishb07bkj7d0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fitbPantryApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:461837880175:android:492f1000a32044ba2c369a",
         "android_client_info": {
           "package_name": "com.fitbpantry.fitb_pantry_app"
