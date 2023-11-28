@@ -46,179 +46,162 @@ class _LoginPageState extends State<LoginPage> {
         return SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 48.h),
-            child: SizedBox(
-              height: ScreenUtil.defaultSize.height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const LogoHeaderWidget(),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Personal Info',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 40.sp,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const LogoHeaderWidget(),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Personal Info',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 40.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 32.h,
+                      ),
+                      TextFormField(
+                        controller: phoneController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
+                          hintText: 'Phone Number',
+                          fillColor: const Color(0xfff2f4fa),
+                          filled: true,
                         ),
-                        SizedBox(
-                          height: 32.h,
-                        ),
-                        TextFormField(
-                          controller: phoneController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            hintText: 'Phone Number',
-                            fillColor: const Color(0xfff2f4fa),
-                            filled: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a phone number';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      TextFormField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a phone number';
-                            }
-                            return null;
-                          },
+                          hintText: 'Email',
+                          fillColor: const Color(0xfff2f4fa),
+                          filled: true,
                         ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        TextFormField(
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            hintText: 'Email',
-                            fillColor: const Color(0xfff2f4fa),
-                            filled: true,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              !EmailValidator.validate(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      TextFormField(
+                        controller: firstNameController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                !EmailValidator.validate(value)) {
-                              return 'Please enter a valid email';
-                            }
-                            return null;
-                          },
+                          hintText: 'First Name',
+                          fillColor: const Color(0xfff2f4fa),
+                          filled: true,
                         ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        TextFormField(
-                          controller: firstNameController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            hintText: 'First Name',
-                            fillColor: const Color(0xfff2f4fa),
-                            filled: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'required field';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      TextFormField(
+                        controller: lastNameController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'required field';
-                            }
-                            return null;
-                          },
+                          hintText: 'Last Name',
+                          fillColor: const Color(0xfff2f4fa),
+                          filled: true,
                         ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        TextFormField(
-                          controller: lastNameController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            hintText: 'Last Name',
-                            fillColor: const Color(0xfff2f4fa),
-                            filled: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'required field';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      DropdownButtonFormField(
+                        items: pageStore.schoolsList,
+                        onChanged: (schoolValue) {
+                          setState(() {
+                            selectedSchool = schoolValue;
+                            schoolController.text = schoolValue;
+                          });
+                        },
+                        value: selectedSchool,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'required field';
-                            }
-                            return null;
-                          },
+                          hintText: 'Select a school',
+                          fillColor: const Color(0xfff2f4fa),
+                          filled: true,
                         ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        DropdownButtonFormField(
-                          items: pageStore.schoolsList,
-                          onChanged: (schoolValue) {
-                            setState(() {
-                              selectedSchool = schoolValue;
-                              schoolController.text = schoolValue;
-                            });
-                          },
-                          value: selectedSchool,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            hintText: 'Select a school',
-                            fillColor: const Color(0xfff2f4fa),
-                            filled: true,
-                          ),
-                          isExpanded: false,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          elevation: 16,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'required field';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 48.h,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            if (_formKey.currentState!.validate()) {
-                              bool canStudentOrder = await pageStore.canStudentOrder(emailController.text);
-                              if(canStudentOrder) {
-                                bool isValidOrderDay =
-                                await pageStore.isTodayValidOrderDay(
-                                  selectedSchool,
-                                  phoneController.text,
-                                  emailController.text,
-                                  firstNameController.text,
-                                  lastNameController.text,
-                                  schoolController.text,
-                                );
-                                if (isValidOrderDay) {
-                                  if (context.mounted) {
-                                    context.router.replace(
-                                      const OrderRoute(),
-                                    );
-                                  }
-                                } else {
-                                  const snackBar = SnackBar(
-                                    content: Text(
-                                      'Sorry, you cannot order from your school at this time',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    backgroundColor: Colors.red,
+                        isExpanded: false,
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        elevation: 16,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'required field';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 48.h,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            bool canStudentOrder = await pageStore.canStudentOrder(emailController.text);
+                            if(canStudentOrder) {
+                              bool isValidOrderDay =
+                              await pageStore.isTodayValidOrderDay(
+                                selectedSchool,
+                                phoneController.text,
+                                emailController.text,
+                                firstNameController.text,
+                                lastNameController.text,
+                                schoolController.text,
+                              );
+                              if (isValidOrderDay) {
+                                if (context.mounted) {
+                                  context.router.replace(
+                                    const OrderRoute(),
                                   );
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
                                 }
                               } else {
                                 const snackBar = SnackBar(
                                   content: Text(
-                                    'You already ordered this week',
+                                    'Sorry, you cannot order from your school at this time',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
@@ -230,34 +213,48 @@ class _LoginPageState extends State<LoginPage> {
                                       .showSnackBar(snackBar);
                                 }
                               }
-                            }
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 18.w,
-                              vertical: 20.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xffFF6600),
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Start Order',
-                                style: TextStyle(
-                                  fontSize: 32.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
+                            } else {
+                              const snackBar = SnackBar(
+                                content: Text(
+                                  'You already ordered this week',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
+                                backgroundColor: Colors.red,
+                              );
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            }
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18.w,
+                            vertical: 20.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffFF6600),
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Start Order',
+                              style: TextStyle(
+                                fontSize: 32.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
