@@ -31,7 +31,7 @@ abstract class _OrderPageStore with Store {
     isLoading = true;
 
     QuerySnapshot<Map<String, dynamic>> groupsSnapshot =
-    await firestore.collection("Groups").get();
+        await firestore.collection("Groups").get();
 
     for (var doc in groupsSnapshot.docs) {
       groupList.add(
@@ -48,7 +48,7 @@ abstract class _OrderPageStore with Store {
 
     for (var group in groupList) {
       for (var doc in itemsSnapshot.docs) {
-        if(doc['group'] == group.name) {
+        if (doc['group'] == group.name) {
           group.items.add(
             ItemModel(
               image: doc['image'],
@@ -62,5 +62,4 @@ abstract class _OrderPageStore with Store {
     }
     isLoading = false;
   }
-
 }

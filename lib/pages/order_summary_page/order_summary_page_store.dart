@@ -35,7 +35,18 @@ abstract class _OrderSummaryPageStore with Store {
 
   @observable
   String userSchool = '';
+
+  @observable
   String schoolEmail = '';
+
+  @observable
+  String name = '';
+
+  @observable
+  String firstName = '';
+
+  @observable
+  String lastName = '';
 
   @action
   Future<void> loadSchoolEmail() async {
@@ -71,19 +82,34 @@ abstract class _OrderSummaryPageStore with Store {
     }
 
     try {
+      print("hello");
       CollectionReference studentOrders =
           FirebaseFirestore.instance.collection('Orders');
 
+      DocumentSnapshot<Map<String, dynamic>> doc =
+          await firestore.collection('Student').doc(AccountService.id).get();
+      firstName = doc.data()?['firstName'];
+      lastName = doc.data()?['lastName'];
+      name = '$firstName $lastName';
+
+      print(name);
+
       Map<String, dynamic> dataToSave = {
+        'name': name,
         'items': orderedItems
             .map((item) => {'itemId': item.id, 'quantity': 1})
             .toList(),
         'studentId': AccountService.id,
+        'timestamp': FieldValue.serverTimestamp()
       };
+
+      print(dataToSave);
 
       // Save the data to the cart items collection
       await studentOrders.doc(AccountService.id).set(dataToSave);
-    } catch (e) {}
+    } catch (e) {
+      print("Error: $e");
+    }
 
     isLoading = false;
   }
@@ -94,8 +120,6 @@ abstract class _OrderSummaryPageStore with Store {
 
     try {
       //get name
-      String firstName = '';
-      String lastName = '';
       String userSchool = '';
       String phoneNumber = '';
       String userName = '';
