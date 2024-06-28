@@ -4,8 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_lambdas
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: type=lint
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
@@ -29,7 +28,7 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.singleton<_i3.AccountService>(_i3.AccountService());
+    gh.singleton<_i3.AccountService>(() => _i3.AccountService());
     gh.factory<_i4.LoginPageStore>(() => _i4.LoginPageStore());
     gh.factory<_i5.OrderPageStore>(() => _i5.OrderPageStore());
     gh.factory<_i6.OrderSummaryPageStore>(

@@ -29,6 +29,7 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Observer(builder: (context) {
         if (pageStore.isLoading) {
           if (pageStore.isLoading) {
@@ -84,8 +85,8 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount:
-                                pageStore.orderSummaryList[index - 1].items.length,
+                            itemCount: pageStore
+                                .orderSummaryList[index - 1].items.length,
                             itemBuilder: (BuildContext context, itemIndex) {
                               return Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.h),
@@ -99,7 +100,8 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                                     ),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         width: 65.w,
@@ -146,6 +148,7 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                 padding: const EdgeInsets.only(bottom: 16),
                 child: GestureDetector(
                   onTap: () {
+                    pageStore.sendEmail();
                     context.router.replace(const CompletedRoute());
                   },
                   child: Container(

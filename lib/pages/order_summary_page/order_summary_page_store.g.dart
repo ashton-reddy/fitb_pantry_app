@@ -25,6 +25,30 @@ mixin _$OrderSummaryPageStore on _OrderSummaryPageStore, Store {
     });
   }
 
+  late final _$schoolEmailAtom =
+      Atom(name: '_OrderSummaryPageStore.schoolEmail', context: context);
+
+  @override
+  String get schoolEmail {
+    _$schoolEmailAtom.reportRead();
+    return super.schoolEmail;
+  }
+
+  @override
+  set schoolEmail(String value) {
+    _$schoolEmailAtom.reportWrite(value, super.schoolEmail, () {
+      super.schoolEmail = value;
+    });
+  }
+
+  late final _$loadSchoolEmailAsyncAction =
+      AsyncAction('_OrderSummaryPageStore.loadschoolEmail', context: context);
+
+  @override
+  Future<void> loadSchoolEmail() {
+    return _$loadSchoolEmailAsyncAction.run(() => super.loadSchoolEmail());
+  }
+
   late final _$loadPageAsyncAction =
       AsyncAction('_OrderSummaryPageStore.loadPage', context: context);
 
@@ -33,10 +57,19 @@ mixin _$OrderSummaryPageStore on _OrderSummaryPageStore, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
+  late final _$sendEmailAsyncAction =
+      AsyncAction('_OrderSummaryPageStore.sendEmail', context: context);
+
+  @override
+  Future<void> sendEmail() {
+    return _$sendEmailAsyncAction.run(() => super.sendEmail());
+  }
+
   @override
   String toString() {
     return '''
-isLoading: ${isLoading}
+isLoading: ${isLoading},
+schoolEmail: ${schoolEmail}
     ''';
   }
 }

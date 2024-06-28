@@ -40,8 +40,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.18.1
   flutter_svg: ^1.1.6
-  firebase_core: ^2.4.0
-  get: ^4.6.1
+  firebase_core: ^2.32.0
+  get: ^4.6.6
   get_storage: ^2.0.3
 
   # MobX packages. MobX is a state-management library that makes it simple to connect the reactive
@@ -75,6 +75,7 @@ dependencies:
   json_serializable: ^6.5.4
   json_annotation: ^4.4.0
   email_validator: ^2.1.17
+  mailer: ^6.1.0
 
 dev_dependencies:
   flutter_test:

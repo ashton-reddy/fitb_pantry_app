@@ -2,8 +2,8 @@ import 'package:fitb_pantry_app/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class App extends StatelessWidget {
-  App({super.key});
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
   final _router = AppRouter();
 

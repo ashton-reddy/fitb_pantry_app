@@ -45,10 +45,10 @@ abstract class _LoginPageStore with Store {
   @action
   Future<bool> canStudentOrder(String docId) async {
     isLoading = true;
-    QuerySnapshot snap  =
-    await FirebaseFirestore.instance.collection('Orders').get();
+    QuerySnapshot snap =
+        await FirebaseFirestore.instance.collection('Orders').get();
     for (var document in snap.docs) {
-      if(document.id == docId) {
+      if (document.id == docId) {
         isLoading = false;
         return false;
       }
@@ -94,6 +94,7 @@ abstract class _LoginPageStore with Store {
         'firstName': firstName,
         'lastName': lastName,
         'school': school,
+        'timestamp': FieldValue.serverTimestamp()
       };
       CollectionReference collectionRef =
           FirebaseFirestore.instance.collection('Student');

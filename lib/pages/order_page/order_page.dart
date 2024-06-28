@@ -9,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class OrderPage extends StatefulWidget {
-
   const OrderPage({
     Key? key,
   }) : super(key: key);
@@ -30,6 +29,7 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Observer(builder: (context) {
         if (pageStore.isLoading) {
           return const Center(

@@ -9,6 +9,7 @@ class CompletedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -28,8 +29,8 @@ class CompletedPage extends StatelessWidget {
                     ),
                     Text(
                       'Completed',
-                      style:
-                          TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: 32.sp, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 16.h,

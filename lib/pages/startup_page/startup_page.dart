@@ -9,47 +9,61 @@ class StartupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(0, 100.h, 0, 50.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Image(
-              image: AssetImage('assets/fitb.png'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.router.push(const LoginRoute());
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shadowColor: Colors.transparent,
-                elevation: 0.0,
-              ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 18.w,
-                  vertical: 20.h,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xffFF6600),
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-                child: Center(
-                  child: Text(
-                    'Get Started',
-                    style: TextStyle(
-                      fontSize: 32.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 300.0), // Adjust the top padding as needed
+                child: Image.asset(
+                  'assets/fitb.png',
+                  width: 300,
                 ),
               ),
-            ),
-          ],
+              Spacer(), // Pushes the button to the bottom
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 360.0), // Adjust the bottom padding as needed
+                child: Builder(
+                  builder: (BuildContext newContext) {
+                    return ElevatedButton(
+                        onPressed: () {
+                          context.router.push(const LoginRoute());
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xffFF6600),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the rounded corners
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16.0,
+                              horizontal: 32.0), // Adjust padding as needed
+                          minimumSize: const Size(
+                              200.0, 50.0), // Set minimum button size
+                          textStyle: const TextStyle(
+                              fontSize: 20.0), // Adjust text size
+                        ),
+                        child: const Text(
+                          'Get Started',
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ));
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

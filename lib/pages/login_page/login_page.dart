@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Observer(builder: (context) {
         if (pageStore.isLoading) {
           return const Center(
@@ -181,10 +182,11 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            bool canStudentOrder = await pageStore.canStudentOrder(emailController.text);
-                            if(canStudentOrder) {
+                            bool canStudentOrder = await pageStore
+                                .canStudentOrder(emailController.text);
+                            if (canStudentOrder) {
                               bool isValidOrderDay =
-                              await pageStore.isTodayValidOrderDay(
+                                  await pageStore.isTodayValidOrderDay(
                                 selectedSchool,
                                 phoneController.text,
                                 emailController.text,
@@ -195,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (isValidOrderDay) {
                                 if (context.mounted) {
                                   context.router.replace(
-                                    const OrderRoute(),
+                                    OrderRoute(),
                                   );
                                 }
                               } else {
