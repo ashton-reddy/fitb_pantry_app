@@ -41,16 +41,12 @@ class StartupPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xffFF6600),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                10.0), // Adjust the rounded corners
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 16.0,
-                              horizontal: 32.0), // Adjust padding as needed
-                          minimumSize: const Size(
-                              200.0, 50.0), // Set minimum button size
-                          textStyle: const TextStyle(
-                              fontSize: 20.0), // Adjust text size
+                              vertical: 16.0, horizontal: 32.0),
+                          minimumSize: const Size(200.0, 50.0),
+                          textStyle: const TextStyle(fontSize: 20.0),
                         ),
                         child: const Text(
                           'Get Started',

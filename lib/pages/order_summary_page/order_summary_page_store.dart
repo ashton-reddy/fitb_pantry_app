@@ -57,7 +57,7 @@ abstract class _OrderSummaryPageStore with Store {
       userSchool = doc.data()?['school'];
       DocumentSnapshot<Map<String, dynamic>> doc2 =
           await firestore.collection('School').doc(userSchool).get();
-      schoolEmail = doc2.data()?['email'];
+      schoolEmail = doc2.data()?['Email'];
     } catch (e) {
       print('Error loading user email: $e');
     }
@@ -82,28 +82,28 @@ abstract class _OrderSummaryPageStore with Store {
     }
 
     try {
-      print("hello");
       CollectionReference studentOrders =
           FirebaseFirestore.instance.collection('Orders');
+      DocumentReference studentDocRef =
+          firestore.collection('Student').doc(AccountService.id);
 
+      //Save data to 'Student' document
+      Map<String, dynamic> studentDataToUpdate = {
+        'timestamp': FieldValue.serverTimestamp()
+      };
+
+      await studentDocRef.update(studentDataToUpdate);
+
+      //Save data to 'Orders' collection
       DocumentSnapshot<Map<String, dynamic>> doc =
           await firestore.collection('Student').doc(AccountService.id).get();
-      firstName = doc.data()?['firstName'];
-      lastName = doc.data()?['lastName'];
-      name = '$firstName $lastName';
-
-      print(name);
 
       Map<String, dynamic> dataToSave = {
-        'name': name,
         'items': orderedItems
             .map((item) => {'itemId': item.id, 'quantity': 1})
             .toList(),
         'studentId': AccountService.id,
-        'timestamp': FieldValue.serverTimestamp()
       };
-
-      print(dataToSave);
 
       // Save the data to the cart items collection
       await studentOrders.doc(AccountService.id).set(dataToSave);

@@ -70,10 +70,10 @@ abstract class _LoginPageStore with Store {
     bool isValidOrderDay = false;
     final doc = await firestore.collection("School").doc(selectedSchool).get();
     if (doc.exists) {
-      bool isSchoolActive = doc['is active'];
+      bool isSchoolActive = doc['Is active'];
       int weekdayValue = DateTime.now().weekday;
-      int openDate = doc['open date'].toInt();
-      int closeDate = doc['close date'].toInt();
+      int openDate = doc['Open date'].toInt();
+      int closeDate = doc['Close date'].toInt();
       if (isSchoolActive == true) {
         if (openDate <= closeDate) {
           isValidOrderDay =
@@ -94,7 +94,6 @@ abstract class _LoginPageStore with Store {
         'firstName': firstName,
         'lastName': lastName,
         'school': school,
-        'timestamp': FieldValue.serverTimestamp()
       };
       CollectionReference collectionRef =
           FirebaseFirestore.instance.collection('Student');
