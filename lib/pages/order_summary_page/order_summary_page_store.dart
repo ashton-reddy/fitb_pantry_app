@@ -87,7 +87,6 @@ abstract class _OrderSummaryPageStore with Store {
       DocumentReference studentDocRef =
           firestore.collection('Student').doc(AccountService.id);
 
-      //Save data to 'Student' document
       Map<String, dynamic> studentDataToUpdate = {
         'timestamp': FieldValue.serverTimestamp()
       };
@@ -97,6 +96,8 @@ abstract class _OrderSummaryPageStore with Store {
       //Save data to 'Orders' collection
       DocumentSnapshot<Map<String, dynamic>> doc =
           await firestore.collection('Student').doc(AccountService.id).get();
+
+      userSchool = doc.data()?['school'];
 
       Map<String, dynamic> dataToSave = {
         'items': orderedItems
@@ -134,7 +135,8 @@ abstract class _OrderSummaryPageStore with Store {
       userEmail = doc.data()?['email'];
       userName = '$firstName $lastName';
 
-      final smtpServer = gmail('draetesting@gmail.com', 'gyuetejtokoftbzj');
+      final smtpServer =
+          gmail('mattknight@fillingintheblanks.org', 'pcokikwhnvrickmk');
       await loadSchoolEmail();
 
       String orderSummaryHtml = '''
@@ -159,7 +161,6 @@ abstract class _OrderSummaryPageStore with Store {
         <tbody>
 ''';
 
-// Loop through orderSummaryList to generate table rows
       for (int i = 0; i < orderSummaryList.length; i++) {
         orderSummaryHtml += '''
     <tr>
@@ -198,7 +199,11 @@ abstract class _OrderSummaryPageStore with Store {
 
       final message = Message()
         ..from = Address('draetesting@gmail.com', 'Filling in the Blanks')
-        ..recipients.addAll([schoolEmail, 'draevizcarra@gmail.com'])
+        ..recipients.addAll([
+          schoolEmail,
+          'draevizcarra@gmail.com',
+          'mattknight@fillingintheblanks.org'
+        ])
         ..subject = 'FITB Order Summary: $userName ${DateTime.now()}'
         ..html = orderSummaryHtml;
 
