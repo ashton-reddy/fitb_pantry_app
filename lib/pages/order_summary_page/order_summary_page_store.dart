@@ -125,6 +125,8 @@ abstract class _OrderSummaryPageStore with Store {
       String phoneNumber = '';
       String userName = '';
       String userEmail = '';
+      String senderEmail = '';
+      String password = '';
 
       DocumentSnapshot<Map<String, dynamic>> doc =
           await firestore.collection('Student').doc(AccountService.id).get();
@@ -135,8 +137,17 @@ abstract class _OrderSummaryPageStore with Store {
       userEmail = doc.data()?['email'];
       userName = '$firstName $lastName';
 
-      final smtpServer =
-          gmail('mattknight@fillingintheblanks.org', 'pcokikwhnvrickmk');
+      DocumentSnapshot<Map<String, dynamic>> emailDoc =
+          await firestore.collection('Sender').doc('senderEmail').get();
+
+      if (emailDoc.exists) {
+        senderEmail = emailDoc.data()?['email'] ?? '';
+        password = emailDoc.data()?['password'] ?? '';
+      } else {
+        print('Sender document does not exist.');
+      }
+
+      final smtpServer = gmail(senderEmail, password);
       await loadSchoolEmail();
 
       String orderSummaryHtml = '''
@@ -198,9 +209,8 @@ abstract class _OrderSummaryPageStore with Store {
 ''';
 
       final message = Message()
-        ..from = Address(
-            'mattknight@fillingintheblanks.org', 'Filling in the Blanks')
-        ..recipients.addAll([schoolEmail, 'mattknight@fillingintheblanks.org'])
+        ..from = Address('draevizcarra@gmail.com', 'Filling in the Blanks')
+        ..recipients.addAll([schoolEmail, 'draeangela@gmail.com'])
         ..subject = 'FITB Order Summary: $userName ${DateTime.now()}'
         ..html = orderSummaryHtml;
 
