@@ -210,7 +210,7 @@ abstract class _OrderSummaryPageStore with Store {
 
       final message = Message()
         ..from = Address('draevizcarra@gmail.com', 'Filling in the Blanks')
-        ..recipients.addAll([schoolEmail, 'draeangela@gmail.com'])
+        ..recipients.addAll([schoolEmail, 'Mattknight@fillingintheblanks.org'])
         ..subject = 'FITB Order Summary: $userName ${DateTime.now()}'
         ..html = orderSummaryHtml;
 
