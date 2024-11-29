@@ -59,10 +59,11 @@ android {
 
     signingConfigs {
         release {
-            storeFile = file(keystoreProperties['storeFile'])
             storePassword = keystoreProperties['storePassword']
-            keyAlias = keystoreProperties['keyAlias']
             keyPassword = keystoreProperties['keyPassword']
+            keyAlias = keystoreProperties['keyAlias']
+            storeFile = file(keystoreProperties['storeFile'])
+
         }
     }
 
