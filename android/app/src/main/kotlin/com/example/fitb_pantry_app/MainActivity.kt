@@ -1,4 +1,4 @@
-package com.fitbpantry.fitb_pantry_app
+package com.fitbpantry.fitb_app
 
 import io.flutter.embedding.android.FlutterActivity
 

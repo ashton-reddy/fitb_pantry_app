@@ -1,6 +1,6 @@
 {
-    "name": "fitb_pantry_app",
-    "short_name": "fitb_pantry_app",
+    "name": "fitb_app",
+    "short_name": "fitb_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
